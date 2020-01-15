@@ -9,8 +9,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    redirect_to root_url and return unless @user.activated?
+    @user = User.find(params[:id]) # paramsで:idパラメータを受け取る(/users/1にアクセスしたら1を受け取る)
+    @microposts = @user.microposts.paginate(page: params[:page])  # pageを受け取ってmicropostsに渡して表示する。
+    redirect_to root_url and return unless @user.activated? # activatedがfalseならルートURLヘリダイレクト
   end
 
   def new
